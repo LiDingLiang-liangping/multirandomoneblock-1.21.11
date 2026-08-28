@@ -50,4 +50,9 @@ public class CraftModeCommand {
         );
     }
 
-    private
+    private static void broadcast(MinecraftServer server, String message) {
+        for (ServerPlayer player : server.getPlayerList().getPlayers()) {
+            player.sendSystemMessage(Component.literal(message));
+        }
+    }
+}
