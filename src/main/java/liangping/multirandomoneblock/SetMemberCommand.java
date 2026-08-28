@@ -9,7 +9,7 @@ import net.minecraft.network.chat.Component;
 public class SetMemberCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher, MultiRandomOneBlockMod mod) {
         dispatcher.register(Commands.literal("setmember")
-            .requires(source -> source.hasPermission(2))
+            .requires(source -> source.hasPermission(4))
             .then(Commands.argument("count", IntegerArgumentType.integer(1, 100))
                 .executes(context -> {
                     int count = IntegerArgumentType.getInteger(context, "count");
