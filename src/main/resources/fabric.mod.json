@@ -1,7 +1,7 @@
 {
     "schemaVersion": 1,
     "id": "multirandomoneblock",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "name": "Multi Random One Block",
     "description": "多人随机单方块：多维度独立单方块平台，初始物资，矿洞模式切换，维度专属方块与生物，防掉落保护。",
     "authors": ["liangping"],
