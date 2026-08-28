@@ -36,4 +36,11 @@ public class SetMemberCommand {
                         context.getSource().sendSuccess(() -> Component.literal("§e当前模式: " + mode), false);
                         context.getSource().sendSuccess(() -> Component.literal("§7总挖掘数: " + current + " / " + required + " (矿洞模式所需)"), false);
                     } else {
-                        context.getSource().sendSuccess(() -> Component.literal("§
+                        context.getSource().sendSuccess(() -> Component.literal("§e尚未设定人数，请使用 /setmember <人数>"), false);
+                    }
+                    return 1;
+                })
+            )
+        );
+    }
+}
