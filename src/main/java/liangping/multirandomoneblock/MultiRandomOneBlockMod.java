@@ -206,7 +206,9 @@ public class MultiRandomOneBlockMod implements DedicatedServerModInitializer {
 
     private void generateAllPlatforms(MinecraftServer server) {
         ServerLevel overworld = server.overworld();
-        BlockPos overworldSpawn = overworld.getRespawnData().pos();
+        // 硬编码出生点 (0, 64, 0)，并设置世界出生点
+        BlockPos overworldSpawn = new BlockPos(0, 64, 0);
+        overworld.setDefaultSpawnPos(overworldSpawn, 0.0f);
         overworldPlatforms = generatePlatformsForDimension(overworld, overworldSpawn, Blocks.GRASS_BLOCK);
 
         ServerLevel nether = server.getLevel(Level.NETHER);
@@ -409,7 +411,8 @@ public class MultiRandomOneBlockMod implements DedicatedServerModInitializer {
 
         if (!candidates.isEmpty()) {
             EntityType<?> chosenType = candidates.get(RANDOM.nextInt(candidates.size()));
-            Mob mob = (Mob) chosenType.create(world, EntitySpawnReason.COMMAND);
+            // 平替：用 MOB_SUMMONED 代替 COMMAND
+            Mob mob = (Mob) chosenType.create(world, EntitySpawnReason.MOB_SUMMONED);
             if (mob != null) {
                 mob.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
                 mob.setYRot(RANDOM.nextFloat() * 360);
