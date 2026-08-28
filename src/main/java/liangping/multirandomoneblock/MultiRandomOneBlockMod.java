@@ -208,7 +208,6 @@ public class MultiRandomOneBlockMod implements DedicatedServerModInitializer {
         ServerLevel overworld = server.overworld();
         // 硬编码出生点 (0, 64, 0)，并设置世界出生点
         BlockPos overworldSpawn = new BlockPos(0, 64, 0);
-        overworld.setDefaultSpawnPos(overworldSpawn, 0.0f);
         overworldPlatforms = generatePlatformsForDimension(overworld, overworldSpawn, Blocks.GRASS_BLOCK);
 
         ServerLevel nether = server.getLevel(Level.NETHER);
