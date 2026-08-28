@@ -206,7 +206,8 @@ public class MultiRandomOneBlockMod implements DedicatedServerModInitializer {
 
     private void generateAllPlatforms(MinecraftServer server) {
         ServerLevel overworld = server.overworld();
-        BlockPos overworldSpawn = overworld.getSharedSpawnPos();
+        // 1.21.11: getSharedSpawnPos() -> getRespawnData().pos()
+        BlockPos overworldSpawn = overworld.getRespawnData().pos();
         overworldPlatforms = generatePlatformsForDimension(overworld, overworldSpawn, Blocks.GRASS_BLOCK);
 
         ServerLevel nether = server.getLevel(Level.NETHER);
