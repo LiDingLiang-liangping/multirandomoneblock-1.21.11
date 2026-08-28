@@ -9,9 +9,8 @@ import net.minecraft.server.level.ServerPlayer;
 
 public class CraftModeCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher, MultiRandomOneBlockMod mod) {
+        // 抛弃：移除 .requires()，让所有人都能用
         dispatcher.register(Commands.literal("craftmode")
-            // 1.21.11: 改用 Commands.hasPermission(4)
-            .requires(Commands.hasPermission(4))
             .then(Commands.literal("cave")
                 .executes(context -> {
                     if (!mod.isInitialized()) {
@@ -51,9 +50,4 @@ public class CraftModeCommand {
         );
     }
 
-    private static void broadcast(MinecraftServer server, String message) {
-        for (ServerPlayer player : server.getPlayerList().getPlayers()) {
-            player.sendSystemMessage(Component.literal(message));
-        }
-    }
-}
+    private
