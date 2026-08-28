@@ -10,8 +10,8 @@ import net.minecraft.server.level.ServerPlayer;
 public class CraftModeCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher, MultiRandomOneBlockMod mod) {
         dispatcher.register(Commands.literal("craftmode")
-            // 1.21.11: hasPermission(int) 已删除，改用 hasPermissionLevel
-            .requires(source -> source.hasPermissionLevel(4))
+            // 1.21.11: 改用 Commands.hasPermission(4)
+            .requires(Commands.hasPermission(4))
             .then(Commands.literal("cave")
                 .executes(context -> {
                     if (!mod.isInitialized()) {
