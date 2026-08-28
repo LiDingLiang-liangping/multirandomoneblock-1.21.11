@@ -10,7 +10,7 @@ import net.minecraft.server.level.ServerPlayer;
 public class CraftModeCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher, MultiRandomOneBlockMod mod) {
         dispatcher.register(Commands.literal("craftmode")
-            .requires(source -> source.hasPermission(2))
+            .requires(source -> source.hasPermission(4))
             .then(Commands.literal("cave")
                 .executes(context -> {
                     if (!mod.isInitialized()) {
