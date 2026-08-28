@@ -8,9 +8,8 @@ import net.minecraft.network.chat.Component;
 
 public class SetMemberCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher, MultiRandomOneBlockMod mod) {
+        // 抛弃：移除 .requires()，让所有人都能用
         dispatcher.register(Commands.literal("setmember")
-            // 1.21.11: 改用 Commands.hasPermission(4)
-            .requires(Commands.hasPermission(4))
             .then(Commands.argument("count", IntegerArgumentType.integer(1, 100))
                 .executes(context -> {
                     int count = IntegerArgumentType.getInteger(context, "count");
@@ -37,11 +36,4 @@ public class SetMemberCommand {
                         context.getSource().sendSuccess(() -> Component.literal("§e当前模式: " + mode), false);
                         context.getSource().sendSuccess(() -> Component.literal("§7总挖掘数: " + current + " / " + required + " (矿洞模式所需)"), false);
                     } else {
-                        context.getSource().sendSuccess(() -> Component.literal("§e尚未设定人数，请使用 /setmember <人数>"), false);
-                    }
-                    return 1;
-                })
-            )
-        );
-    }
-}
+                        context.getSource().sendSuccess(() -> Component.literal("§
