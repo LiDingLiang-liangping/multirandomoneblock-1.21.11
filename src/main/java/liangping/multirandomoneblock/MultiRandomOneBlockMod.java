@@ -9,10 +9,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -232,7 +233,7 @@ public class MultiRandomOneBlockMod implements DedicatedServerModInitializer {
             if (newPos != null) {
                 generateSingleBlock(world, newPos, baseBlock);
                 platforms.add(newPos);
-                LOGGER.info("Generated platform {} in {} at {}", i, world.dimension().location(), newPos);
+                LOGGER.info("Generated platform {} in {} at {}", i, world.dimension().toString(), newPos);
             }
         }
         return platforms;
@@ -295,7 +296,7 @@ public class MultiRandomOneBlockMod implements DedicatedServerModInitializer {
             double entityY = entity.getY();
             
             if (entityY < platform.getY() + 0.5) {
-                entity.teleportTo(
+                entity.setPos(
                     platform.getX() + 0.5,
                     platform.getY() + 1.0,
                     platform.getZ() + 0.5
@@ -329,8 +330,8 @@ public class MultiRandomOneBlockMod implements DedicatedServerModInitializer {
                 ));
             } else {
                 for (Block block : BuiltInRegistries.BLOCK) {
-                    ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
-                    if (id != null && id.getNamespace().equals("minecraft")) {
+                    Identifier id = BuiltInRegistries.BLOCK.getKey(block);
+                    if (id != null) {
                         String path = id.getPath();
                         if (!path.contains("nether") && !path.contains("soul") &&
                             !path.contains("warped") && !path.contains("crimson") &&
@@ -345,8 +346,8 @@ public class MultiRandomOneBlockMod implements DedicatedServerModInitializer {
             }
         } else if (dimension == Level.NETHER) {
             for (Block block : BuiltInRegistries.BLOCK) {
-                ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
-                if (id != null && id.getNamespace().equals("minecraft")) {
+                Identifier id = BuiltInRegistries.BLOCK.getKey(block);
+                if (id != null) {
                     String path = id.getPath();
                     if ((path.contains("nether") || path.contains("soul") ||
                          path.contains("warped") || path.contains("crimson") ||
@@ -408,9 +409,10 @@ public class MultiRandomOneBlockMod implements DedicatedServerModInitializer {
 
         if (!candidates.isEmpty()) {
             EntityType<?> chosenType = candidates.get(RANDOM.nextInt(candidates.size()));
-            Mob mob = (Mob) chosenType.create(world);
+            Mob mob = (Mob) chosenType.create(world, EntitySpawnReason.COMMAND);
             if (mob != null) {
-                mob.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, RANDOM.nextFloat() * 360, 0);
+                mob.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+                mob.setYRot(RANDOM.nextFloat() * 360);
                 world.addFreshEntity(mob);
             }
         }
